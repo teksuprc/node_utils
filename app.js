@@ -4,11 +4,11 @@ const sizeOf = require('image-size');
 const sharp = require('sharp');
 
 
-const DIR = "C:\\Users\\chandlerru\\Documents\\DEV\\projects\\ng6-image-gallery\\src\\data\\images";
-const THUMBDIR = "C:\\Users\\chandlerru\\Documents\\DEV\\projects\\ng6-image-gallery\\src\\data\\thumbs";
+const DIR = "../src/data/images";
+const THUMBDIR = "../src/data/thumbs";
 
 
-var Image = function(id,e,n,u,w,h,a,c,t,tw,th,l,cat) {
+const Image = function(id,e,n,u,w,h,a,c,t,tw,th,l,cat) {
     return {
         "id": id,
         "ext": e,
@@ -26,11 +26,11 @@ var Image = function(id,e,n,u,w,h,a,c,t,tw,th,l,cat) {
     };
 }
 
-var categories = ['one', 'two', 'three', 'four', 'null', 'null', 'null'];
+const categories = ['one', 'two', 'three', 'four', 'null', 'null', 'null'];
 
-var cnt = 0;
+let cnt = 0;
 
-var getAspectRatio = (w,h) => {
+let getAspectRatio = (w,h) => {
     if(w > h) {
         return w/h;
     }
@@ -43,12 +43,12 @@ var getAspectRatio = (w,h) => {
     return 0;
 }
 
-var getRandomCategory = () => {
+const getRandomCategory = () => {
     let r = Math.floor(Math.random() * 7);
     return categories[r];
 }
 
-var createThumbnail = (name, inFile, outFile) => {
+const createThumbnail = (name, inFile, outFile) => {
     sharp(inFile).resize(200).toFile(outFile, (err, info) => {
         if(err)
             console.log(err);
@@ -57,7 +57,7 @@ var createThumbnail = (name, inFile, outFile) => {
     return {tw: size.width, th: size.height};
 }
 
-var readDir = (dirPath) => {
+const readDir = (dirPath) => {
     return fs.readdirSync(dirPath).reduce((list, file) => {
         var inFile = path.join(dirPath, file);
         var outFile = path.join(THUMBDIR, file);
@@ -81,7 +81,7 @@ var readDir = (dirPath) => {
     }, []);
 }
 
-var list = readDir(DIR);
+const list = readDir(DIR);
 console.log("completed sucessfully");
 
 fs.writeFile("images.json", JSON.stringify({"data": list}), (err) => {
